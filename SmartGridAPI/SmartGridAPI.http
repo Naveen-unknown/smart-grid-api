@@ -1,0 +1,6 @@
+@SmartGridAPI_HostAddress = http://localhost:5115
+
+GET {{SmartGridAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
