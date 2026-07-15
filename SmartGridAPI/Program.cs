@@ -11,6 +11,11 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Disable reloadOnChange to prevent inotify crashes on Linux/Render free tier
+builder.Configuration.Sources.Clear();
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
+builder.Configuration.AddEnvironmentVariables();
+
 // ─────────────────────────────────────────────
 // 1. Database — MySQL via Pomelo
 // ─────────────────────────────────────────────
