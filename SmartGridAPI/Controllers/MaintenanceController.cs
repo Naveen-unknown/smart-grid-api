@@ -95,7 +95,7 @@ namespace SmartGridAPI.Controllers
             string body = $"SMART GRID ALERT\n\nHigh Priority Fault\n\nLocation:\n{fault.Node?.Location}\n\nFault:\n{fault.Description}\n\nSeverity:\n{fault.Severity}.";
             try
             {
-                TwilioClient.Init("AC_YOUR_ACCOUNT_SID", "YOUR_AUTH_TOKEN");
+                TwilioClient.Init(Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID"), Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN"));
                 if (nearestTeam.Members != null && nearestTeam.Members.Any())
                 {
                     foreach (var member in nearestTeam.Members)
@@ -236,7 +236,7 @@ namespace SmartGridAPI.Controllers
 
             try
             {
-                TwilioClient.Init("AC_YOUR_ACCOUNT_SID", "YOUR_AUTH_TOKEN");
+                TwilioClient.Init(Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID"), Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN"));
                 var message = MessageResource.Create(
                     body: request.Message,
                     from: new Twilio.Types.PhoneNumber("+17627012086"),
@@ -281,7 +281,7 @@ namespace SmartGridAPI.Controllers
             string adminPhone = "+919344255537";
             try
             {
-                TwilioClient.Init("AC_YOUR_ACCOUNT_SID", "YOUR_AUTH_TOKEN");
+                TwilioClient.Init(Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID"), Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN"));
 
                 var message = MessageResource.Create(
                     body: "SMART GRID ALERT: This is a test SMS from your Maintenance Dashboard!",
