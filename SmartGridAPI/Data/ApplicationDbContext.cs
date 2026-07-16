@@ -100,27 +100,27 @@ namespace SmartGridAPI.Data
 
             // Seed dummy faults
             modelBuilder.Entity<Fault>().HasData(
-                new Fault { Id = 101, NodeId = 1, Description = "Transformer Oil Leak", Severity = "Critical", Status = "Reported", ReportedAt = DateTime.UtcNow.AddHours(-2), ReportedByUserId = 1 },
-                new Fault { Id = 102, NodeId = 2, Description = "Voltage Sag", Severity = "Medium", Status = "InProgress", ReportedAt = DateTime.UtcNow.AddHours(-5), ReportedByUserId = 1 },
-                new Fault { Id = 103, NodeId = 3, Description = "Phase Imbalance", Severity = "High", Status = "Reported", ReportedAt = DateTime.UtcNow.AddHours(-1), ReportedByUserId = 1 },
-                new Fault { Id = 104, NodeId = 4, Description = "Broken Insulator", Severity = "Low", Status = "Resolved", ReportedAt = DateTime.UtcNow.AddDays(-1), ResolvedAt = DateTime.UtcNow.AddHours(-12), ReportedByUserId = 1 }
+                new Fault { Id = 101, NodeId = 1, Description = "Transformer Oil Leak", Severity = "Critical", Status = "Reported", ReportedAt = new DateTime(2026, 7, 1, 10, 0, 0, DateTimeKind.Utc), ReportedByUserId = 1 },
+                new Fault { Id = 102, NodeId = 2, Description = "Voltage Sag", Severity = "Medium", Status = "InProgress", ReportedAt = new DateTime(2026, 7, 1, 8, 0, 0, DateTimeKind.Utc), ReportedByUserId = 1 },
+                new Fault { Id = 103, NodeId = 3, Description = "Phase Imbalance", Severity = "High", Status = "Reported", ReportedAt = new DateTime(2026, 7, 1, 12, 0, 0, DateTimeKind.Utc), ReportedByUserId = 1 },
+                new Fault { Id = 104, NodeId = 4, Description = "Broken Insulator", Severity = "Low", Status = "Resolved", ReportedAt = new DateTime(2026, 6, 30, 10, 0, 0, DateTimeKind.Utc), ResolvedAt = new DateTime(2026, 6, 30, 20, 0, 0, DateTimeKind.Utc), ReportedByUserId = 1 }
             );
 
             // Seed dummy outages
             modelBuilder.Entity<Outage>().HasData(
-                new Outage { Id = 101, NodeId = 2, AffectedCustomers = 450, StartedAt = DateTime.UtcNow.AddHours(-4), Status = "Ongoing" },
-                new Outage { Id = 102, NodeId = 5, AffectedCustomers = 1200, StartedAt = DateTime.UtcNow.AddDays(-1), RestoredAt = DateTime.UtcNow.AddHours(-10), Status = "Restored" }
+                new Outage { Id = 101, NodeId = 2, AffectedCustomers = 450, StartedAt = new DateTime(2026, 7, 1, 14, 0, 0, DateTimeKind.Utc), Status = "Ongoing" },
+                new Outage { Id = 102, NodeId = 5, AffectedCustomers = 1200, StartedAt = new DateTime(2026, 6, 30, 10, 0, 0, DateTimeKind.Utc), RestoredAt = new DateTime(2026, 6, 30, 18, 0, 0, DateTimeKind.Utc), Status = "Restored" }
             );
 
             // Seed dummy energy readings
             modelBuilder.Entity<EnergyReading>().HasData(
-                new EnergyReading { Id = 101, NodeId = 1, UserId = 1, Voltage = 220m, Current = 15m, PowerFactor = 0.95m, Consumption = 120m, Production = 0m, Timestamp = DateTime.UtcNow.AddHours(-1) },
-                new EnergyReading { Id = 102, NodeId = 2, UserId = 1, Voltage = 215m, Current = 20m, PowerFactor = 0.92m, Consumption = 150m, Production = 50m, Timestamp = DateTime.UtcNow.AddHours(-2) },
-                new EnergyReading { Id = 103, NodeId = 3, UserId = 1, Voltage = 230m, Current = 10m, PowerFactor = 0.98m, Consumption = 80m, Production = 0m, Timestamp = DateTime.UtcNow.AddHours(-3) },
-                new EnergyReading { Id = 104, NodeId = 1, UserId = 1, Voltage = 225m, Current = 16m, PowerFactor = 0.94m, Consumption = 125m, Production = 0m, Timestamp = DateTime.UtcNow.AddDays(-1) },
-                new EnergyReading { Id = 105, NodeId = 2, UserId = 1, Voltage = 210m, Current = 22m, PowerFactor = 0.90m, Consumption = 160m, Production = 40m, Timestamp = DateTime.UtcNow.AddDays(-1) },
-                new EnergyReading { Id = 106, NodeId = 3, UserId = 1, Voltage = 235m, Current = 9m, PowerFactor = 0.99m, Consumption = 75m, Production = 0m, Timestamp = DateTime.UtcNow.AddDays(-2) },
-                new EnergyReading { Id = 107, NodeId = 1, UserId = 1, Voltage = 218m, Current = 18m, PowerFactor = 0.93m, Consumption = 135m, Production = 0m, Timestamp = DateTime.UtcNow.AddDays(-3) }
+                new EnergyReading { Id = 101, NodeId = 1, UserId = 1, Voltage = 220m, Current = 15m, PowerFactor = 0.95m, Consumption = 120m, Production = 0m, Timestamp = new DateTime(2026, 7, 1, 15, 0, 0, DateTimeKind.Utc) },
+                new EnergyReading { Id = 102, NodeId = 2, UserId = 1, Voltage = 215m, Current = 20m, PowerFactor = 0.92m, Consumption = 150m, Production = 50m, Timestamp = new DateTime(2026, 7, 1, 14, 0, 0, DateTimeKind.Utc) },
+                new EnergyReading { Id = 103, NodeId = 3, UserId = 1, Voltage = 230m, Current = 10m, PowerFactor = 0.98m, Consumption = 80m, Production = 0m, Timestamp = new DateTime(2026, 7, 1, 13, 0, 0, DateTimeKind.Utc) },
+                new EnergyReading { Id = 104, NodeId = 1, UserId = 1, Voltage = 225m, Current = 16m, PowerFactor = 0.94m, Consumption = 125m, Production = 0m, Timestamp = new DateTime(2026, 6, 30, 15, 0, 0, DateTimeKind.Utc) },
+                new EnergyReading { Id = 105, NodeId = 2, UserId = 1, Voltage = 210m, Current = 22m, PowerFactor = 0.90m, Consumption = 160m, Production = 40m, Timestamp = new DateTime(2026, 6, 30, 15, 0, 0, DateTimeKind.Utc) },
+                new EnergyReading { Id = 106, NodeId = 3, UserId = 1, Voltage = 235m, Current = 9m, PowerFactor = 0.99m, Consumption = 75m, Production = 0m, Timestamp = new DateTime(2026, 6, 29, 15, 0, 0, DateTimeKind.Utc) },
+                new EnergyReading { Id = 107, NodeId = 1, UserId = 1, Voltage = 218m, Current = 18m, PowerFactor = 0.93m, Consumption = 135m, Production = 0m, Timestamp = new DateTime(2026, 6, 28, 15, 0, 0, DateTimeKind.Utc) }
             );
 
             // Seed grid nodes

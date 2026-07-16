@@ -67,7 +67,7 @@ namespace SmartGridAPI.Migrations
 
                     b.HasIndex("NodeId", "Timestamp");
 
-                    b.ToTable("EnergyReadings");
+                    b.ToTable("EnergyReadings", (string)null);
 
                     b.HasData(
                         new
@@ -229,7 +229,7 @@ namespace SmartGridAPI.Migrations
 
                     b.HasIndex("NodeId", "Status");
 
-                    b.ToTable("Faults");
+                    b.ToTable("Faults", (string)null);
 
                     b.HasData(
                         new
@@ -324,7 +324,7 @@ namespace SmartGridAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GridNodes");
+                    b.ToTable("GridNodes", (string)null);
 
                     b.HasData(
                         new
@@ -417,7 +417,7 @@ namespace SmartGridAPI.Migrations
 
                     b.HasKey("TeamId");
 
-                    b.ToTable("MaintenanceTeams");
+                    b.ToTable("MaintenanceTeams", (string)null);
 
                     b.HasData(
                         new
@@ -476,7 +476,7 @@ namespace SmartGridAPI.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("MaintenanceTeamMembers");
+                    b.ToTable("MaintenanceTeamMembers", (string)null);
 
                     b.HasData(
                         new
@@ -533,7 +533,7 @@ namespace SmartGridAPI.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("MaintenanceTickets");
+                    b.ToTable("MaintenanceTickets", (string)null);
                 });
 
             modelBuilder.Entity("SmartGridAPI.Models.Notification", b =>
@@ -568,7 +568,7 @@ namespace SmartGridAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("SmartGridAPI.Models.Outage", b =>
@@ -627,7 +627,7 @@ namespace SmartGridAPI.Migrations
 
                     b.HasIndex("NodeId", "Status");
 
-                    b.ToTable("Outages");
+                    b.ToTable("Outages", (string)null);
 
                     b.HasData(
                         new
@@ -697,7 +697,7 @@ namespace SmartGridAPI.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new
