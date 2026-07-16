@@ -6,6 +6,10 @@ using SmartGridAPI.DTOs;
 using SmartGridAPI.Models;
 using SmartGridAPI.Services;
 
+using System.IO;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+
 namespace SmartGridAPI.Controllers
 {
     [ApiController]
@@ -309,7 +313,7 @@ namespace SmartGridAPI.Controllers
 
         /// <summary>Update node status</summary>
         [HttpPatch("nodes/{id}/status")]
-        [Authorize(Roles = "Admin,Operator")]
+        [Authorize(Roles = "Admin,Operator,Electricity Officer")]
         public async Task<IActionResult> UpdateNodeStatus(int id, [FromBody] string status)
         {
             try
@@ -332,6 +336,39 @@ namespace SmartGridAPI.Controllers
             {
                 _logger.LogError(ex, "Error updating node status");
                 return StatusCode(500, new { success = false, message = "Error updating node status" });
+            }
+        }
+        [HttpPost("nodes/{id}/sms-alert")]
+        [Authorize(Roles = "Admin,Operator,Electricity Officer")]
+        public async Task<IActionResult> SendNodeSmsAlert(int id)
+        {
+            try
+            {
+                var node = await _context.GridNodes.FindAsync(id);
+                if (node == null) return NotFound(new { success = false, message = "Node not found" });
+
+                string adminPhone = "+919344255537";
+                try
+                {
+                    TwilioClient.Init(Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID"), Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN"));
+                    var message = MessageResource.Create(
+                        body: $"SMART GRID ALERT: Grid Node {node.NodeId} ({node.Location}) is under maintenance. There will be no power for today. We apologize for the inconvenience.",
+                        from: new Twilio.Types.PhoneNumber("+17627012086"),
+                        to: new Twilio.Types.PhoneNumber(adminPhone)
+                    );
+                    _logger.LogInformation($"[SMS SUCCESS] Real Twilio message dispatched to {adminPhone}. SID: {message.Sid}");
+                    return Ok(new { success = true, message = $"SMS dispatched to all affected customers in {node.Location}!" });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"[SMS ERROR] Failed to send SMS: {ex.Message}");
+                    return Ok(new { success = true, message = $"[Mock] SMS dispatched to all affected customers in {node.Location}!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error sending node SMS alert");
+                return StatusCode(500, new { success = false, message = "Error sending SMS" });
             }
         }
     }

@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\navee\\SmartGridAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{6DB772F8-9ADD-AE76-17AC-00A694335A36}|SmartGridAPI\\SmartGridAPI.csproj|c:\\users\\navee\\smartgridapi\\smartgridapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6DB772F8-9ADD-AE76-17AC-00A694335A36}|SmartGridAPI\\SmartGridAPI.csproj|solutionrelative:smartgridapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{6DB772F8-9ADD-AE76-17AC-00A694335A36}|SmartGridAPI\\SmartGridAPI.csproj|c:\\users\\navee\\smartgridapi\\smartgridapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6DB772F8-9ADD-AE76-17AC-00A694335A36}|SmartGridAPI\\SmartGridAPI.csproj|solutionrelative:smartgridapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -41,10 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{6DB772F8-9ADD-AE76-17AC-00A694335A36}|SmartGridAPI\\SmartGridAPI.csproj|c:\\users\\navee\\smartgridapi\\smartgridapi\\controllers\\energycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6DB772F8-9ADD-AE76-17AC-00A694335A36}|SmartGridAPI\\SmartGridAPI.csproj|solutionrelative:smartgridapi\\controllers\\energycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6DB772F8-9ADD-AE76-17AC-00A694335A36}|SmartGridAPI\\SmartGridAPI.csproj|c:\\users\\navee\\smartgridapi\\smartgridapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6DB772F8-9ADD-AE76-17AC-00A694335A36}|SmartGridAPI\\SmartGridAPI.csproj|solutionrelative:smartgridapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6DB772F8-9ADD-AE76-17AC-00A694335A36}|SmartGridAPI\\SmartGridAPI.csproj|c:\\users\\navee\\smartgridapi\\smartgridapi\\middleware\\exceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -98,19 +98,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "SmartGridAPI\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Properties\\launchSettings.json",
-              "RelativeToolTip": "SmartGridAPI\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-07-13T12:32:59.746Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "DashboardController.cs",
               "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Controllers\\DashboardController.cs",
               "RelativeDocumentMoniker": "SmartGridAPI\\Controllers\\DashboardController.cs",
@@ -122,7 +110,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "AIService.cs",
               "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Services\\AIService.cs",
               "RelativeDocumentMoniker": "SmartGridAPI\\Services\\AIService.cs",
@@ -134,7 +122,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "IAIService.cs",
               "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Services\\IAIService.cs",
               "RelativeDocumentMoniker": "SmartGridAPI\\Services\\IAIService.cs",
@@ -146,7 +134,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\appsettings.json",
               "RelativeDocumentMoniker": "SmartGridAPI\\appsettings.json",
@@ -154,12 +142,11 @@
               "RelativeToolTip": "SmartGridAPI\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-07-12T15:18:05.143Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-12T15:18:05.143Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "AIChatController.cs",
               "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Controllers\\AIChatController.cs",
               "RelativeDocumentMoniker": "SmartGridAPI\\Controllers\\AIChatController.cs",
@@ -171,7 +158,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Program.cs",
               "RelativeDocumentMoniker": "SmartGridAPI\\Program.cs",
@@ -179,12 +166,36 @@
               "RelativeToolTip": "SmartGridAPI\\Program.cs",
               "ViewState": "AgIAAMoAAAAAAAAAAAAawPEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-11T14:59:44.841Z",
+              "WhenOpened": "2026-07-11T14:59:44.841Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "SmartGridAPI\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "SmartGridAPI\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAqwMgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-11T16:07:12.268Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "SmartGridAPI\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Properties\\launchSettings.json",
+              "RelativeToolTip": "SmartGridAPI\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-07-13T12:32:59.746Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\appsettings.Development.json",
               "RelativeDocumentMoniker": "SmartGridAPI\\appsettings.Development.json",
@@ -196,7 +207,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "NotificationController.cs",
               "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Controllers\\NotificationController.cs",
               "RelativeDocumentMoniker": "SmartGridAPI\\Controllers\\NotificationController.cs",
@@ -208,7 +219,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "EnergyController.cs",
               "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Controllers\\EnergyController.cs",
               "RelativeDocumentMoniker": "SmartGridAPI\\Controllers\\EnergyController.cs",
@@ -217,18 +228,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADUBAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-11T16:07:02.589Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "SmartGridAPI\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\navee\\SmartGridAPI\\SmartGridAPI\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "SmartGridAPI\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAMoAAAAAAAAAAAAAAMgAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-11T16:07:12.268Z"
             },
             {
               "$type": "Document",
