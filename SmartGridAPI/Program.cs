@@ -9,9 +9,12 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+// Disable reloadOnChange and force polling to prevent inotify crashes on Linux/Render free tier
+Environment.SetEnvironmentVariable("DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE", "false");
+Environment.SetEnvironmentVariable("DOTNET_USE_POLLING_FILE_WATCHER", "true");
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Disable reloadOnChange to prevent inotify crashes on Linux/Render free tier
 builder.Configuration.Sources.Clear();
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
 builder.Configuration.AddEnvironmentVariables();
