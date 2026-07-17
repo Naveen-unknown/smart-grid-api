@@ -213,7 +213,7 @@ Provide a health assessment.";
             bool usePollinations = string.IsNullOrEmpty(_gitHubToken) || _gitHubToken == "ghp_YOUR_GITHUB_TOKEN_HERE" || !_gitHubToken.StartsWith("ghp_");
             string apiUrl = usePollinations ? "https://text.pollinations.ai/openai/chat/completions" : _apiBaseUrl;
             string apiToken = usePollinations ? "dummy" : _gitHubToken;
-            string modelToUse = usePollinations ? "gpt-4o" : _model; // Pollinations maps this to a strong model
+            string modelToUse = usePollinations ? "openai" : _model; // Pollinations maps this to a strong model
 
             try
             {
@@ -265,7 +265,7 @@ Provide a health assessment.";
             bool usePollinations = string.IsNullOrEmpty(_gitHubToken) || _gitHubToken == "ghp_YOUR_GITHUB_TOKEN_HERE" || !_gitHubToken.StartsWith("ghp_");
             string apiUrl = usePollinations ? "https://text.pollinations.ai/openai/chat/completions" : _apiBaseUrl;
             string apiToken = usePollinations ? "dummy" : _gitHubToken;
-            string modelToUse = usePollinations ? "gpt-4o" : _model;
+            string modelToUse = usePollinations ? "openai" : _model;
 
             try
             {
