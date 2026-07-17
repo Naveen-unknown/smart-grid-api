@@ -85,6 +85,7 @@ builder.Services.AddCors(options =>
 // ─────────────────────────────────────────────
 // 4. Application Services
 // ─────────────────────────────────────────────
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped<IAIService, AIService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddHttpClient();
