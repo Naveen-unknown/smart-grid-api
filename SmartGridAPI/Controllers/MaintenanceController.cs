@@ -56,7 +56,12 @@ namespace SmartGridAPI.Controllers
             var availableTeams = await _context.MaintenanceTeams.Include(t => t.Members).Where(t => t.Status == "Available").ToListAsync();
             if (!availableTeams.Any())
             {
-                return BadRequest(new { message = "No available maintenance teams found." });
+                // Fallback for demo purposes: just use any team if none are available
+                availableTeams = await _context.MaintenanceTeams.Include(t => t.Members).ToListAsync();
+                if (!availableTeams.Any())
+                {
+                    return BadRequest(new { message = "No maintenance teams exist in the system." });
+                }
             }
 
             MaintenanceTeam? nearestTeam = null;
