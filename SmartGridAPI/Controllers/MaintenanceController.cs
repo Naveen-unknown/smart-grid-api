@@ -231,6 +231,48 @@ namespace SmartGridAPI.Controllers
             return Ok(member);
         }
 
+        [HttpGet("profile/{userId}")]
+        public async Task<IActionResult> GetProfile(int userId)
+        {
+            var profile = await _context.MaintenanceTeamMembers
+                .Include(m => m.Team)
+                .FirstOrDefaultAsync(m => m.UserId == userId);
+            
+            if (profile == null) return NotFound(new { message = "Profile not found" });
+            
+            return Ok(profile);
+        }
+
+        [HttpPost("profile")]
+        public async Task<IActionResult> SetupProfile([FromBody] ProfileSetupDto request)
+        {
+            if (request.UserId <= 0) return BadRequest("Invalid User ID.");
+            
+            // Check if profile already exists
+            var existingProfile = await _context.MaintenanceTeamMembers.FirstOrDefaultAsync(m => m.UserId == request.UserId);
+            if (existingProfile != null)
+            {
+                return BadRequest(new { message = "Profile already exists." });
+            }
+
+            var team = await _context.MaintenanceTeams.FindAsync(request.TeamId);
+            if (team == null) return NotFound("Team not found.");
+
+            var newMember = new MaintenanceTeamMember
+            {
+                UserId = request.UserId,
+                Name = request.Name,
+                Role = request.Role,
+                PhoneNumber = request.PhoneNumber,
+                TeamId = request.TeamId
+            };
+
+            _context.MaintenanceTeamMembers.Add(newMember);
+            await _context.SaveChangesAsync();
+
+            return Ok(newMember);
+        }
+
         [HttpDelete("members/{memberId}")]
         public async Task<IActionResult> DeleteTeamMember(int memberId)
         {
@@ -350,5 +392,14 @@ namespace SmartGridAPI.Controllers
     public class SmsRequestDto
     {
         public string Message { get; set; } = string.Empty;
+    }
+
+    public class ProfileSetupDto
+    {
+        public int UserId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
+        public int TeamId { get; set; }
     }
 }

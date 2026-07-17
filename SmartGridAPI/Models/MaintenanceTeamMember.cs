@@ -22,5 +22,7 @@ namespace SmartGridAPI.Models
 
         [ForeignKey("TeamId")]
         public MaintenanceTeam? Team { get; set; }
+
+        public int? UserId { get; set; }
     }
 }
