@@ -280,6 +280,54 @@ namespace SmartGridAPI.Controllers
             return Ok(newMember);
         }
 
+        [HttpPost("register-member")]
+        public async Task<IActionResult> RegisterSecureMember([FromBody] RegisterMemberDto request)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
+            if (existingUser != null) return Conflict(new { message = "Username already exists." });
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                var user = new User
+                {
+                    Username = request.Username,
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                    Role = "Maintenance Team",
+                    Email = $"{request.Username}@smartgrid.local", // Dummy email
+                    IsActive = true,
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+
+                var newMember = new MaintenanceTeamMember
+                {
+                    UserId = user.Id,
+                    Name = request.Name,
+                    Role = request.Role,
+                    PhoneNumber = request.PhoneNumber,
+                    TeamId = request.TeamId
+                };
+
+                _context.MaintenanceTeamMembers.Add(newMember);
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+
+                return Ok(new { success = true, message = "Member registered successfully.", member = newMember });
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                _logger.LogError(ex, "Error registering secure maintenance member");
+                return StatusCode(500, new { message = "Registration failed." });
+            }
+        }
+
         [HttpDelete("members/{memberId}")]
         public async Task<IActionResult> DeleteTeamMember(int memberId)
         {
@@ -408,5 +456,15 @@ namespace SmartGridAPI.Controllers
         public string Role { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public int TeamId { get; set; }
+    }
+
+    public class RegisterMemberDto
+    {
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
+        public int TeamId { get; set; } = 1;
     }
 }
