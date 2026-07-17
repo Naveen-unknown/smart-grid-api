@@ -87,6 +87,9 @@ namespace SmartGridAPI.Controllers
 
             // Update team status
             nearestTeam.Status = "Busy";
+            
+            // Sync Fault Status
+            fault.Status = "InProgress";
 
             _context.MaintenanceTickets.Add(ticket);
             await _context.SaveChangesAsync();
@@ -175,6 +178,13 @@ namespace SmartGridAPI.Controllers
             }
 
             ticket.Status = "Pending Verification";
+            
+            var fault = await _context.Faults.FindAsync(ticket.FaultId);
+            if (fault != null)
+            {
+                fault.Status = "Pending Verification";
+            }
+
             await _context.SaveChangesAsync();
 
             return Ok(ticket);
