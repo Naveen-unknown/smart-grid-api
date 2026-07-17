@@ -211,18 +211,16 @@ Provide a health assessment.";
                 gridStatusContext = "Real-time grid status available upon request.";
             }
 
-            // Check if token is configured
-            if (string.IsNullOrEmpty(_gitHubToken) || _gitHubToken.StartsWith("ghp_") == false)
-            {
-                _logger.LogInformation("GitHub token is not configured or invalid. Using local AI agent fallback.");
-                return GetLocalFallbackResponse(message, gridStatusContext);
-            }
+            bool usePollinations = string.IsNullOrEmpty(_gitHubToken) || _gitHubToken == "ghp_YOUR_GITHUB_TOKEN_HERE" || !_gitHubToken.StartsWith("ghp_");
+            string apiUrl = usePollinations ? "https://text.pollinations.ai/openai/chat/completions" : _apiBaseUrl;
+            string apiToken = usePollinations ? "dummy" : _gitHubToken;
+            string modelToUse = usePollinations ? "gpt-4o" : _model; // Pollinations maps this to a strong model
 
             try
             {
                 var requestBody = new
                 {
-                    model = _model,
+                    model = modelToUse,
                     messages = BuildChatMessages(history, message, gridStatusContext),
                     temperature = 0.7,
                     max_tokens = 1024,
@@ -233,11 +231,10 @@ Provide a health assessment.";
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 _httpClient.DefaultRequestHeaders.Clear();
-                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_gitHubToken}");
-                _httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.github+json");
-                _httpClient.DefaultRequestHeaders.Add("X-GitHub-Api-Version", "2022-11-28");
+                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
+                _httpClient.DefaultRequestHeaders.Add("Accept", "application/json"); // text.pollinations.ai doesn't like vnd.github+json
 
-                var response = await _httpClient.PostAsync(_apiBaseUrl, content);
+                var response = await _httpClient.PostAsync(apiUrl, content);
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
@@ -259,24 +256,23 @@ Provide a health assessment.";
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, "Error calling GitHub Models API for chat. Falling back to local AI agent.");
+                _logger.LogWarning(ex, "Error calling AI API for chat. Falling back to local AI agent.");
                 return GetLocalFallbackResponse(message, gridStatusContext);
             }
         }
 
         private async Task<string> CallGitHubModelsAPIAsync(string prompt)
         {
-            if (string.IsNullOrEmpty(_gitHubToken) || _gitHubToken.StartsWith("ghp_") == false)
-            {
-                _logger.LogWarning("Invalid or missing GitHub token. Using local fallback.");
-                return GetLocalAnalysisFallback(prompt);
-            }
+            bool usePollinations = string.IsNullOrEmpty(_gitHubToken) || _gitHubToken == "ghp_YOUR_GITHUB_TOKEN_HERE" || !_gitHubToken.StartsWith("ghp_");
+            string apiUrl = usePollinations ? "https://text.pollinations.ai/openai/chat/completions" : _apiBaseUrl;
+            string apiToken = usePollinations ? "dummy" : _gitHubToken;
+            string modelToUse = usePollinations ? "gpt-4o" : _model;
 
             try
             {
                 var requestBody = new
                 {
-                    model = _model,
+                    model = modelToUse,
                     messages = new[]
                     {
                         new { role = "system", content = SYSTEM_INSTRUCTION },
@@ -291,11 +287,10 @@ Provide a health assessment.";
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 _httpClient.DefaultRequestHeaders.Clear();
-                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_gitHubToken}");
-                _httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.github+json");
-                _httpClient.DefaultRequestHeaders.Add("X-GitHub-Api-Version", "2022-11-28");
+                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
+                _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
 
-                var response = await _httpClient.PostAsync(_apiBaseUrl, content);
+                var response = await _httpClient.PostAsync(apiUrl, content);
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
@@ -317,7 +312,7 @@ Provide a health assessment.";
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, "Error calling GitHub Models API. Falling back to local analysis.");
+                _logger.LogWarning(ex, "Error calling AI API. Falling back to local analysis.");
                 return GetLocalAnalysisFallback(prompt);
             }
         }

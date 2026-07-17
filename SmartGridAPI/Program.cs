@@ -233,6 +233,34 @@ using (var scope = app.Services.CreateScope())
 
         await context.SaveChangesAsync();
         Console.WriteLine("✅ Seeded user password hashes and Kanyakumari areas verified/updated in database.");
+
+        // SEED READINGS
+        {
+            var gridNodes = context.GridNodes.ToList();
+            var seedRandom = new Random();
+            foreach (var node in gridNodes)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    context.EnergyReadings.Add(new SmartGridAPI.Models.EnergyReading
+                    {
+                        NodeId = node.Id,
+                        UserId = 1,
+                        Consumption = (decimal)(seedRandom.NextDouble() * 250 + 50),
+                        Production = (decimal)(seedRandom.NextDouble() * 50),
+                        Voltage = (decimal)(seedRandom.NextDouble() * 20 + 215),
+                        Current = (decimal)(seedRandom.NextDouble() * 35 + 10),
+                        PowerFactor = (decimal)(0.95 + seedRandom.NextDouble() * 0.04),
+                        Frequency = 50,
+                        MeterId = $"MTR-{node.NodeId}-{i}",
+                        Timestamp = DateTime.UtcNow.AddMinutes(-seedRandom.Next(1, 60))
+                    });
+                }
+                node.LastUpdatedAt = DateTime.UtcNow;
+            }
+            context.SaveChanges();
+            Console.WriteLine("✅ Seeded random energy readings for today into remote DB!");
+        }
     }
     catch (Exception ex)
     {
