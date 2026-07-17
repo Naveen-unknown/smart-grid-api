@@ -29,6 +29,7 @@ namespace SmartGridAPI.Controllers
         {
             var tickets = await _context.MaintenanceTickets
                 .Include(t => t.Team)
+                    .ThenInclude(team => team.Members)
                 .Include(t => t.Fault)
                 .OrderByDescending(t => t.AssignedAt)
                 .ToListAsync();
