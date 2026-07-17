@@ -252,7 +252,14 @@ namespace SmartGridAPI.Controllers
             var existingProfile = await _context.MaintenanceTeamMembers.FirstOrDefaultAsync(m => m.UserId == request.UserId);
             if (existingProfile != null)
             {
-                return BadRequest(new { message = "Profile already exists." });
+                existingProfile.Name = request.Name;
+                existingProfile.Role = request.Role;
+                existingProfile.PhoneNumber = request.PhoneNumber;
+                // Only update TeamId if valid, otherwise keep existing
+                if (request.TeamId > 0) existingProfile.TeamId = request.TeamId;
+                
+                await _context.SaveChangesAsync();
+                return Ok(existingProfile);
             }
 
             var team = await _context.MaintenanceTeams.FindAsync(request.TeamId);
