@@ -41,7 +41,8 @@ namespace SmartGridAPI.Services
             _model = configuration["AISettings:Model"] ?? "openai/gpt-4o-mini";
             _apiBaseUrl = configuration["AISettings:ApiBaseUrl"] ?? "https://models.github.ai/inference/chat/completions";
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(30);
+            _httpClient.Timeout = TimeSpan.FromSeconds(120);
+            _httpClient.DefaultRequestHeaders.Add("User-Agent", "SmartGridAPI/1.0");
             _logger = logger;
         }
 
@@ -211,7 +212,7 @@ Provide a health assessment.";
             }
 
             bool usePollinations = string.IsNullOrEmpty(_gitHubToken) || _gitHubToken == "ghp_YOUR_GITHUB_TOKEN_HERE" || !_gitHubToken.StartsWith("ghp_");
-            string apiUrl = usePollinations ? "https://text.pollinations.ai/openai/chat/completions" : _apiBaseUrl;
+            string apiUrl = usePollinations ? "https://text.pollinations.ai/" : _apiBaseUrl;
             string apiToken = usePollinations ? "dummy" : _gitHubToken;
             string modelToUse = usePollinations ? "openai" : _model; // Pollinations maps this to a strong model
 
@@ -238,6 +239,8 @@ Provide a health assessment.";
 
                 if (response.IsSuccessStatusCode)
                 {
+                    if (usePollinations) return responseString;
+
                     using var doc = JsonDocument.Parse(responseString);
                     var result = doc.RootElement
                         .GetProperty("choices")[0]
@@ -263,7 +266,7 @@ Provide a health assessment.";
         private async Task<string> CallGitHubModelsAPIAsync(string prompt)
         {
             bool usePollinations = string.IsNullOrEmpty(_gitHubToken) || _gitHubToken == "ghp_YOUR_GITHUB_TOKEN_HERE" || !_gitHubToken.StartsWith("ghp_");
-            string apiUrl = usePollinations ? "https://text.pollinations.ai/openai/chat/completions" : _apiBaseUrl;
+            string apiUrl = usePollinations ? "https://text.pollinations.ai/" : _apiBaseUrl;
             string apiToken = usePollinations ? "dummy" : _gitHubToken;
             string modelToUse = usePollinations ? "openai" : _model;
 
@@ -294,6 +297,8 @@ Provide a health assessment.";
 
                 if (response.IsSuccessStatusCode)
                 {
+                    if (usePollinations) return responseString;
+
                     using var doc = JsonDocument.Parse(responseString);
                     var result = doc.RootElement
                         .GetProperty("choices")[0]
