@@ -24,6 +24,7 @@ namespace SmartGridAPI.Models
         
         public DateTime AssignedAt { get; set; } = DateTime.UtcNow;
         public DateTime? AcceptedAt { get; set; }
+        public string? AcceptedBy { get; set; }
         public DateTime? ResolvedAt { get; set; }
 
         public string? ProofPhotoUrl { get; set; }

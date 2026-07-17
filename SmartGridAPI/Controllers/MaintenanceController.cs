@@ -140,6 +140,10 @@ namespace SmartGridAPI.Controllers
             if (ticket == null) return NotFound();
 
             ticket.Status = request.Status;
+            if (!string.IsNullOrEmpty(request.AcceptedBy))
+            {
+                ticket.AcceptedBy = request.AcceptedBy;
+            }
             
             if (request.Status == "En Route" || request.Status == "Repairing")
             {
@@ -340,6 +344,7 @@ namespace SmartGridAPI.Controllers
     public class UpdateStatusDto
     {
         public string Status { get; set; } = string.Empty;
+        public string? AcceptedBy { get; set; }
     }
 
     public class SmsRequestDto
