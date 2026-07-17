@@ -207,10 +207,20 @@ using (var scope = app.Services.CreateScope())
             if (node.Id == 5) { node.Location = "Padmanabhapuram Substation"; node.Latitude = 8.2483; node.Longitude = 77.3308; }
         }
 
-        // Patch old Faults descriptions to match new nodes
+        // Patch old Faults descriptions and missing types
         var faults = await context.Faults.ToListAsync();
         foreach (var fault in faults)
         {
+            if (string.IsNullOrEmpty(fault.FaultType))
+            {
+                if (fault.Description.Contains("Transformer", StringComparison.OrdinalIgnoreCase))
+                    fault.FaultType = "Transformer Issue";
+                else if (fault.Description.Contains("Voltage", StringComparison.OrdinalIgnoreCase))
+                    fault.FaultType = "Other";
+                else
+                    fault.FaultType = "Equipment Failure";
+            }
+
             fault.Description = fault.Description
                 .Replace("Downtown Substation", "Nagercoil Substation")
                 .Replace("Industrial Zone", "Marthandam Industrial Zone")

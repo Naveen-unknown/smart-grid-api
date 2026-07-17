@@ -262,6 +262,7 @@ namespace SmartGridAPI.Controllers
             var fault = new Fault 
             { 
                 NodeId = node.Id, 
+                FaultType = "Transformer Issue",
                 Description = "Transformer Overheating", 
                 Severity = "High", 
                 Status = "Pending",
