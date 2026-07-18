@@ -205,7 +205,7 @@ namespace SmartGridAPI.Controllers
                 _logger.LogInformation($"[DEMO FALLBACK] OTP is {otp}");
             }
 
-            return Ok(new { success = true, message = "OTP sent successfully." });
+            return Ok(new { success = true, message = "OTP generated.", otp = otp });
         }
 
         [HttpPost("verify-otp")]
