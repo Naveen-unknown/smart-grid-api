@@ -109,12 +109,17 @@ namespace SmartGridAPI.Controllers
                 {
                     foreach (var member in nearestTeam.Members)
                     {
+                        string toPhone = member.PhoneNumber;
+                        if (toPhone.Length == 10 && !toPhone.StartsWith("+"))
+                        {
+                            toPhone = "+91" + toPhone;
+                        }
                         var message = MessageResource.Create(
                             body: body,
                             from: new Twilio.Types.PhoneNumber("+17627012086"),
-                            to: new Twilio.Types.PhoneNumber(member.PhoneNumber)
+                            to: new Twilio.Types.PhoneNumber(toPhone)
                         );
-                        _logger.LogInformation($"[SMS SUCCESS] Real Twilio message dispatched to {member.PhoneNumber}. SID: {message.Sid}");
+                        _logger.LogInformation($"[SMS SUCCESS] Real Twilio message dispatched to {toPhone}. SID: {message.Sid}");
                     }
                 }
                 else 
@@ -354,13 +359,18 @@ namespace SmartGridAPI.Controllers
             try
             {
                 TwilioClient.Init(Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID"), Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN"));
+                string toPhone = member.PhoneNumber;
+                if (toPhone.Length == 10 && !toPhone.StartsWith("+"))
+                {
+                    toPhone = "+91" + toPhone;
+                }
                 var message = MessageResource.Create(
                     body: request.Message,
                     from: new Twilio.Types.PhoneNumber("+17627012086"),
-                    to: new Twilio.Types.PhoneNumber(member.PhoneNumber)
+                    to: new Twilio.Types.PhoneNumber(toPhone)
                 );
 
-                _logger.LogInformation($"[SMS SUCCESS] Message dispatched to {member.PhoneNumber}. SID: {message.Sid}");
+                _logger.LogInformation($"[SMS SUCCESS] Message dispatched to {toPhone}. SID: {message.Sid}");
                 return Ok(new { success = true, message = $"SMS sent successfully to {member.Name}!" });
             }
             catch (Exception ex)

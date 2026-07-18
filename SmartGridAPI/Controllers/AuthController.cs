@@ -191,12 +191,17 @@ namespace SmartGridAPI.Controllers
             try
             {
                 TwilioClient.Init(Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID"), Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN"));
+                string toPhone = member.PhoneNumber;
+                if (toPhone.Length == 10 && !toPhone.StartsWith("+"))
+                {
+                    toPhone = "+91" + toPhone;
+                }
                 var message = MessageResource.Create(
-                    body: $"Your SmartGrid Login OTP is: {otp}",
+                    body: $"Your SmartGrid OTP is: {otp}. Valid for 5 minutes.",
                     from: new Twilio.Types.PhoneNumber("+17627012086"),
-                    to: new Twilio.Types.PhoneNumber(member.PhoneNumber)
+                    to: new Twilio.Types.PhoneNumber(toPhone)
                 );
-                _logger.LogInformation($"[SMS SUCCESS] OTP {otp} dispatched to {member.PhoneNumber}. SID: {message.Sid}");
+                _logger.LogInformation($"[SMS SUCCESS] OTP sent to {toPhone}. SID: {message.Sid}");
             }
             catch (Exception ex)
             {
