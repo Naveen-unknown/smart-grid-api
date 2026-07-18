@@ -177,16 +177,19 @@ namespace SmartGridAPI.Controllers
             if (string.IsNullOrEmpty(request.CredentialId) || string.IsNullOrEmpty(request.PhoneNumber))
                 return BadRequest(new { success = false, message = "Credential ID and Phone Number are required." });
 
-            string idStr = request.CredentialId.Replace("MTM-", "");
+            string cleanCredentialId = request.CredentialId.Trim().ToUpper();
+            string cleanPhone = request.PhoneNumber.Replace(" ", "").Replace("-", "").Trim();
+
+            string idStr = cleanCredentialId.Replace("MTM-", "");
             if (!int.TryParse(idStr, out int memberId))
                 return BadRequest(new { success = false, message = "Invalid Credential ID format." });
 
             var member = await _context.MaintenanceTeamMembers.FindAsync(memberId);
-            if (member == null || member.PhoneNumber != request.PhoneNumber)
+            if (member == null || member.PhoneNumber != cleanPhone)
                 return NotFound(new { success = false, message = "Invalid Credential ID or Phone Number." });
 
             string otp = new Random().Next(100000, 999999).ToString();
-            _cache.Set($"OTP_{request.CredentialId}", otp, TimeSpan.FromMinutes(5));
+            _cache.Set($"OTP_{cleanCredentialId}", otp, TimeSpan.FromMinutes(5));
 
             try
             {
@@ -219,17 +222,20 @@ namespace SmartGridAPI.Controllers
             if (string.IsNullOrEmpty(request.CredentialId) || string.IsNullOrEmpty(request.Otp))
                 return BadRequest(new { success = false, message = "Credential ID and OTP are required." });
 
-            if (!_cache.TryGetValue($"OTP_{request.CredentialId}", out string? storedOtp) || storedOtp != request.Otp)
+            string cleanCredentialId = request.CredentialId.Trim().ToUpper();
+            string cleanOtp = request.Otp.Trim();
+
+            if (!_cache.TryGetValue($"OTP_{cleanCredentialId}", out string? storedOtp) || storedOtp != cleanOtp)
             {
                 // Accept "123456" as a universal demo backdoor
-                if (request.Otp != "123456")
+                if (cleanOtp != "123456")
                     return Unauthorized(new { success = false, message = "Invalid or expired OTP." });
             }
 
             // Remove OTP after use
-            _cache.Remove($"OTP_{request.CredentialId}");
+            _cache.Remove($"OTP_{cleanCredentialId}");
 
-            string idStr = request.CredentialId.Replace("MTM-", "");
+            string idStr = cleanCredentialId.Replace("MTM-", "");
             int.TryParse(idStr, out int memberId);
 
             var member = await _context.MaintenanceTeamMembers.FindAsync(memberId);
@@ -239,8 +245,8 @@ namespace SmartGridAPI.Controllers
             var user = new User
             {
                 Id = member.UserId ?? memberId + 1000, // Dummy ID if no user record
-                Username = request.CredentialId,
-                Email = $"{request.CredentialId}@smartgrid.local",
+                Username = cleanCredentialId,
+                Email = $"{cleanCredentialId}@smartgrid.local",
                 Role = "Maintenance",
             };
 
